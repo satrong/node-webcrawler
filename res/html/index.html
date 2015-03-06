@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>node-crawler</title>
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <link href="../css/amazeui.min.css" rel="stylesheet" />
+    <link href="../css/ui-dialog.css" rel="stylesheet" />
+    <script src="../js/dialog-plus-min.js"></script>
+    <script src="../js/knockout-3.3.0.debug.js"></script>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <script>
+        var port = '<%=wsport%>';
+    </script>
+    <script src="../js/main.js"></script>
+</head>
+<body>
+    <div class="wrap transition" id="Wrap">
+        <div class="nc-header">
+            <div class="am-g">
+                <div class="am-u-sm-8 am-u-sm-centered">
+                    欢迎使用node-crawler爬虫工具
+                </div>
+            </div>
+        </div>
+
+        <section class="list-config am-g">
+            <div class="am-u-sm-8 am-u-sm-centered">
+                <h4>已有配置：</h4>
+                <ul class="am-list am-list-static" id="ConfigList">
+                    <% list.forEach(function(element,index){ %>
+                    <li><span><%=element%></span><div class="nc-item-btns" data-name="<%=element%>"><button class="am-btn am-btn-xs am-btn-success" tag="start">爬取</button><button class="am-btn am-btn-xs am-btn-primary" tag="edit">修改</button><button class="am-btn am-btn-xs am-btn-warning" tag="remove">删除</button></div></li>
+                    <% }) %>
+                </ul>
+                <div><button class="am-btn am-btn-primary" id="AddBtn">新增配置</button></div>
+            </div>
+        </section>
+
+    </div>
+
+    <ul id="LogList" class="am-list log-list"></ul>
+
+    <footer class="am-text-center footer-bar transition" id="FooterBar">
+        <a href="javascript:;" class="am-btn am-btn-primary am-btn-xs">正在爬取【<b></b>】中... 点击可停止程序</a>
+    </footer>
+
+    <script type="text/html" id="AddTpl">
+        <div class="am-input-group am-input-group-sm margin-tb-5">
+            <span class="am-input-group-label">配置名称</span>
+            <input type="text" class="am-form-field" data-bind="textinput:configName" data-tip="给你的配置去个名字">
+        </div>
+        <div class="am-input-group am-input-group-sm margin-tb-5">
+            <span class="am-input-group-label">页面URL</span>
+            <input type="text" class="am-form-field" data-bind="textinput:url" data-tip="抓取的入口页面（即1级页面），如果是分页，请使用%%替代页面，<br>如：http://xxx.com?page=%%或http://xxx.com/list/12-10-%%.html">
+        </div>
+        <div class="am-input-group am-input-group-sm margin-tb-5">
+            <span class="am-input-group-label">爬取类型</span>
+            <span class="am-form-field">
+                <label class="am-radio-inline">
+                    <input type="radio" value="image" name="type" data-bind="checked:type"> 图片
+                </label>
+                <label class="am-radio-inline">
+                    <input type="radio" value="text" name="type" data-bind="checked:type"> 文本
+                </label>
+            </span>
+        </div>
+        <div class="am-input-group am-input-group-sm margin-tb-5">
+            <span class="am-input-group-label">网址类型</span>
+            <span class="am-form-field">
+                <label class="am-radio-inline">
+                    <input type="radio" value="1" name="page" data-bind="checked:page"> 分页
+                </label>
+                <label class="am-radio-inline">
+                    <input type="radio" value="0" name="page" data-bind="checked:page"> 单页
+                </label>
+                <!-- ko if:page()==='1'-->
+                <label class="am-radio-inline">
+                    从第
+                    <input type="text" class="input-text am-text-center" style="width:50px" data-bind="textinput:from" />
+                    页 到 第
+                    <input type="text" class="input-text am-text-center" style="width:50px" data-bind="textinput:to" />
+                    页
+                </label>
+                <!-- /ko -->
+            </span>
+        </div>
+        <div class="am-input-group am-input-group-sm margin-tb-5">
+            <span class="am-input-group-label">编码方式</span>
+            <input type="text" class="am-form-field" placeholder="默认utf8" data-bind="textinput:charset" data-tip="具体需参考网站的meta中charset参数，常用值：utf8、gbk、gb2312">
+        </div>
+        <div class="am-input-group am-input-group-sm margin-tb-5">
+            <span class="am-input-group-label">存储路径</span>
+            <input type="text" class="am-form-field" data-bind="textinput:saveDir" data-tip="图片或文本存储的路径，请使用绝对路径，如：D:\download">
+        </div>
+        <div class="am-input-group am-input-group-sm margin-tb-5">
+            <span class="am-input-group-label">图片地址处理</span>
+            <input type="text" class="am-form-field" data-bind="textinput:imageFn" data-tip="对抓取到的图片地址进行二次处理，如：<br>抓取到的图片地址为http://xxx.com/small/123.jpg，<br>此地址为小图，而大图的地址为http://xxx.com/big/123.jpg，<br>此时可设置参数为：function(url){return url.replace('small', 'big');}">
+        </div>
+        <ul class="am-list config-add" data-bind="foreach:levels">
+            <li>
+                <div class="am-g">
+                    <div class="am-u-sm-2"><span class="ca-level" data-bind="text:$index()+1+'级页面'"></span></div>
+                    <div class="am-u-sm-4">
+                        <div class="am-input-group am-input-group-sm am-input-group-success">
+                            <span class="am-input-group-label">选择器</span>
+                            <input type="text" class="am-form-field" data-bind="textinput:selector" data-tip="与jQuery的选择器写法一致">
+                        </div>
+                    </div>
+                    <div class="am-u-sm-4">
+                        <div class="am-input-group am-input-group-sm am-input-group-warning">
+                            <span class="am-input-group-label">URL所在属性</span>
+                            <input type="text" class="am-form-field" data-bind="textinput:attr" data-tip="需要得到的URL所在元素上的属性">
+                        </div>
+                    </div>
+                    <div class="am-u-sm-2">
+                        <!-- ko ifnot:$index()===0-->
+                        <button class="am-btn am-btn-danger am-btn-sm" data-bind="click:$root.remove.bind($data,$index())">删除</button>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </script>
+
+</body>
+</html>
