@@ -1,7 +1,10 @@
 ﻿# node-webcrawler
 
 ### 使用方法
-`node index.js`
+```shell
+npm install
+node index.js
+```
 按照控制台的提示进行操作即可
 
 ### 特性
