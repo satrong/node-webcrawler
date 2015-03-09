@@ -95,7 +95,7 @@
         </div>
         <div class="am-input-group am-input-group-sm margin-tb-5">
             <span class="am-input-group-label">图片地址处理</span>
-            <input type="text" class="am-form-field" data-bind="textinput:imageFn" data-tip="对抓取到的图片地址进行二次处理，如：<br>抓取到的图片地址为http://xxx.com/small/123.jpg，<br>此地址为小图，而大图的地址为http://xxx.com/big/123.jpg，<br>此时可设置参数为：function(url){return url.replace('small', 'big');}">
+            <input type="text" class="am-form-field"  placeholder="此项可不填" data-bind="textinput:imageFn" data-tip="对抓取到的图片地址进行二次处理，如：<br>抓取到的图片地址为http://xxx.com/small/123.jpg，<br>此地址为小图，而大图的地址为http://xxx.com/big/123.jpg，<br>此时可设置参数为：function(url){return url.replace('small', 'big');}">
         </div>
         <ul class="am-list config-add" data-bind="foreach:levels">
             <li>
