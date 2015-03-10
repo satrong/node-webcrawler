@@ -1,11 +1,11 @@
 ﻿{
-    "name": "nodejs-crawler",
+    "name": "nodejs-webcrawler",
     "version": "1.1.0",
-    "description": "Nodejs爬虫，可抓取图片和文本",
+    "description": "网页版Nodejs爬虫，可抓取图片和文本",
     "main": "index.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/satrong/node-crawler.git"
+        "url": "https://github.com/satrong/node-webcrawler.git"
     },
     "keywords": [
         "crawler",
@@ -15,7 +15,7 @@
     "author": "Satrong Cao",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/satrong/node-crawler/issues"
+        "url": "https://github.com/satrong/node-webcrawler/issues"
     },
     "homepage": "http://www.xiaoboy.com",
     "dependencies": {
