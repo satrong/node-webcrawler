@@ -1,1 +1,0 @@
-{"url":"http://www.mtvxz.cn/list/37_time_13_0_0_%%.html","type":"text","from":"1","to":"10","charset":"utf8","saveDir":"e:/mv","selector":[{"$":"$(\"span.song-title\").children(\"a\")","attr":"href"},{"$":"$(\"div.music_downlist\").find(\"a.xltxt[href^=thunder]\")","attr":"href"}],"isPagination":1,"mode":"web"}

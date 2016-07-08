@@ -1,1 +1,0 @@
-{"url":"http://sexy.faceks.com/?page=%%","type":"image","from":"1","to":"5","charset":"utf8","saveDir":"e:\\mz","selector":[{"$":"$(\"a.img\")","attr":"href"},{"$":"$(\"a[bigimgsrc]\")","attr":"bigimgsrc"}],"isPagination":1,"mode":"web"}
