@@ -40,6 +40,11 @@ exec.modal = function (_data) {
         onshow: function () {
             var self = this;
             var data = _data || {};
+
+            if (data.type === 'text') {
+                data.levels[data.levels.length - 1].attr = '';
+            }
+
             this.viewmodel = {
                 configName: ko.observable(data.configName),
                 url: ko.observable(data.url),
@@ -58,7 +63,7 @@ exec.modal = function (_data) {
             !_data && this.viewmodel.levels.push(levelitem());
             ko.cleanNode(document.getElementById("AddConfig"));
             ko.applyBindings(this.viewmodel, document.getElementById("AddConfig"));
-            
+
             var bubble = dialog({
                 align: 'top left'
             });
@@ -229,7 +234,7 @@ $(function () {
     }).delegate("li button[tag=start]", "click", function () {
         exec.start.apply(this);
     });
-    
+
     $("#AddBtn").on("click", function () {
         exec.modal.apply(this);
     });
@@ -247,9 +252,10 @@ function validation(model) {
         if (!/^(charset)|(remove)|(imageFn)$/.test(i)) {
             if ('levels' === i) {
                 for (var j = 0, len = model[i].length; j < len; j++) {
-                    if ($.trim(model[i][j].selector) === '') {
+                    const item = model[i];
+                    if ($.trim(item[j].selector) === '') {
                         return j + 1 + '级页面选择器不能为空';
-                    } else if ($.trim(model[i][j].attr) === '') {
+                    } else if (model.type === 'image' && $.trim(item[j].attr) === '') {
                         return j + 1 + '级页面URL所在属性不能为空';
                     }
                 }
