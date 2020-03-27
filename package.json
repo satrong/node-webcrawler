@@ -1,8 +1,11 @@
-﻿{
+{
     "name": "nodejs-webcrawler",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "网页版Nodejs爬虫，可抓取图片和文本",
     "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/satrong/node-webcrawler.git"
@@ -19,12 +22,12 @@
     },
     "homepage": "http://www.xiaoboy.com",
     "dependencies": {
-        "async": "^0.9.0",
-        "iconv-lite": "^0.4.6",
-        "ws": "^0.7.1",
-        "ejs": "^2.2.4",
-        "cheerio": "^0.18.0",
-        "mkdirp": "^0.5.0",
-        "request": "^2.51.0"
+        "async": "^3.2.0",
+        "iconv-lite": "^0.5.1",
+        "ws": "^7.2.3",
+        "ejs": "^3.0.1",
+        "cheerio": "^1.0.0-rc.3",
+        "mkdirp": "^1.0.3",
+        "request": "^2.88.2"
     }
 }
